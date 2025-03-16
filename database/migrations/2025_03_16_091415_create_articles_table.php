@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->id();
+            $table->index('id');
+            $table->string('title');
+            $table->string('author');
+            $table->text('content');
+            $table->string('slug')->unique();
+            $table->string('image')->nullable();
+            $table->boolean('status')->comment('0 = Block, 1 = Active')->default(1);
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }
