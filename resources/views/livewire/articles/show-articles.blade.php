@@ -34,7 +34,7 @@
                             @endif
                         </td>
                         <td class="border px-4 py-2 flex items-center space-x-2">
-                            <button wire:click="edit({{ $article->id }})" class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded">Edit</button>
+                            <flux:button wire:click="edit({{ $article->id }})" class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded">Edit </flux:button>
                             <button wire:click="delete({{ $article->id }})" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded">Delete</button>
                         </td>
                     </tr>
