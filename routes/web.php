@@ -1,8 +1,10 @@
 <?php
 
-use App\Livewire\Articles\ShowArticles;
-use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\Course\CreateCourse;
+use Illuminate\Support\Facades\Route;
+use App\Livewire\Articles\ShowArticles;
+use App\Livewire\Articles\CreateArticles;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,7 +16,8 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
-    Route::get('articles/index', ShowArticles::class)->name('articles.index');
+
+    Route::get('/create-course', CreateCourse::class)->name('create-course');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
