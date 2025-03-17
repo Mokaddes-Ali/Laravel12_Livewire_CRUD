@@ -40,7 +40,7 @@ class CreateCourse extends Component
         $this->validateOnly('image');
 
         if ($this->image) {
-            $this->imagePreview = $this->image->temporaryUrl(); // ইমেজ প্রিভিউ তৈরি
+            $this->imagePreview = $this->image->temporaryUrl();
         }
     }
 
