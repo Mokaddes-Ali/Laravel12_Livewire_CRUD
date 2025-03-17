@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('editor')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->float('price')->default(0);
-            $table->boolean('is_active')->default(true);
+            $table->enum('is_active', ['0', '1'])->default('1')->comment('0: Inactive, 1: Active');
             $table->timestamps();
 
             // Foreign key constraints
