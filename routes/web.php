@@ -20,7 +20,7 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
-    Route::get('/create-course', CreateCourse::class)->name('create-course');
+    Route::get('/create-course', CreateCourse::class)->name('create.course');
     Route::get('/edit-course/{productId}', CreateCourse::class)->name('edit-course');
 
 

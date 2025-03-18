@@ -1,5 +1,5 @@
 <div>
-    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-6">
+    <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-6">
         <div class="flex justify-between items-center border-b pb-4">
             <h2 class="text-2xl font-semibold text-gray-800">Role Management</h2>
             <button wire:click="create" class="bg-green-600 text-white px-4 py-2 text-sm rounded hover:bg-green-700 transition">
@@ -58,8 +58,8 @@
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="border border-gray-300 px-4 py-2 text-left w-20">No</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Name</th>
-                        <th class="border border-gray-300 px-4 py-2 text-center w-64">Give Permission</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left w-40">Name</th>
+                        <th class="border border-gray-300 px-4 py-2 text-center">Give Permission</th>
                         <th class="border border-gray-300 px-4 py-2 text-center w-64">Action</th>
                     </tr>
                 </thead>
@@ -90,7 +90,7 @@
 
    <!-- Delete Confirmation Modal -->
 @if ($deleteRoleId)
-<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+<div class="fixed inset-0 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-96">
         <h2 class="text-xl font-semibold text-gray-800">Delete Role</h2>
         <p class="text-gray-600 mt-2">Are you sure you want to delete the role <span class="font-bold">{{ $deleteRoleName }}</span>?</p>

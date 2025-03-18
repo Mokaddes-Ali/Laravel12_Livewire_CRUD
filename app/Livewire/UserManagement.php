@@ -3,12 +3,13 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 
 class UserManagement extends Component
 {
@@ -19,6 +20,8 @@ class UserManagement extends Component
     public $isEditMode = false;
     public $roles = [];
     public $selectedRoles = [];
+    public $deleteUserId;
+    public $confirmingDelete = false;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -118,9 +121,31 @@ class UserManagement extends Component
         session()->flash('message', 'User updated successfully.');
     }
 
-    public function delete($id)
+    public function confirmDelete($id)
     {
-        User::find($id)->delete();
-        session()->flash('message', 'User deleted successfully.');
+        $this->deleteUserId = $id;
+        $this->confirmingDelete = true;
+    }
+
+    public function delete()
+    {
+        try {
+            $user = User::find($this->deleteUserId);
+
+            if (!$user) {
+                session()->flash('error', 'User not found.');
+                return;
+            }
+
+            // Deleting user without deleting roles
+            $user->roles()->detach();  // Detach roles first if exists
+            $user->delete();  // Then delete user
+
+            session()->flash('message', 'User deleted successfully.');
+        } catch (QueryException $e) {
+            session()->flash('error', 'Cannot delete user. This user is linked to other data.');
+        }
+
+        $this->confirmingDelete = false;
     }
 }
