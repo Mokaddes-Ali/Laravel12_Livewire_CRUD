@@ -1,13 +1,12 @@
 <?php
 
 use Livewire\Volt\Volt;
-use App\Livewire\RoleComponent;
+use App\Livewire\RoleManagement;
 use App\Livewire\Course\CreateCourse;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Articles\ShowArticles;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Livewire\Articles\CreateArticles;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,11 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/create-course', CreateCourse::class)->name('create-course');
     Route::get('/edit-course/{productId}', CreateCourse::class)->name('edit-course');
 
-    Route::resource('roles', RoleController::class);
-    Route::get('/rol', RoleComponent::class)->name('roles.index');
 
-    Route::get('/role', [RoleController::class, 'create']);
-    Route::get('/role/list', [RoleController::class, 'index']);
+    Route::get('/roles', RoleManagement::class)->name('roles.index');
 
     Route::get('/user', [UserController::class, 'create']);
     Route::get('/show', [UserController::class, 'index']);
