@@ -2,6 +2,7 @@
 
 use Livewire\Volt\Volt;
 use App\Livewire\RoleManagement;
+use App\Livewire\UserManagement;
 use App\Livewire\Course\CreateCourse;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -24,10 +25,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/roles', RoleManagement::class)->name('roles.index');
-
-    Route::get('/user', [UserController::class, 'create']);
-    Route::get('/show', [UserController::class, 'index']);
-    Route::resource('users', UserController::class);
+    Route::get('/users', UserManagement::class)->name('users.index');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

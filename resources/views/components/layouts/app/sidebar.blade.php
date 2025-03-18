@@ -36,7 +36,7 @@
                         </li>
                         @can('role-edit')
                         <li>
-                            <a href="{{ url('/user') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a href="{{ url('/users') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                                 Add New User
                             </a>
                         </li>
