@@ -60,11 +60,11 @@
         <div class="w-64 h-screen bg-gray-800 text-white">
             <ul>
                 <li class="p-4 hover:bg-gray-700">
-                    <a href="{{ route('users.index') }}">Chats</a>
+                    <a wire:navigate href="{{ route('userschat.index') }}">Chats</a>
                 </li>
             </ul>
         </div>
-        
+
         </flux:navlist.group>
 
         <flux:spacer />

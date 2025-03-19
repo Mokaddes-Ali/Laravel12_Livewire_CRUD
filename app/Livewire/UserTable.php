@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class UserTable extends Component
@@ -15,8 +16,9 @@ class UserTable extends Component
     }
 
     public function render()
-    {
-        $users = User::whereIn('name', ['Super Admin', 'Admin', 'Teacher'])->get();
-        return view('livewire.user-table', compact('users'));
-    }
+{
+    $users = User::where('id', '!=', Auth::user()->id)->withCount(['unreadMessages'])->get(); // personal id hides
+    return view('livewire.user-table', compact('users'));
+}
+
 }

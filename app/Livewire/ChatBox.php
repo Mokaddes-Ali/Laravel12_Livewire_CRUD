@@ -14,6 +14,7 @@ class ChatBox extends Component
     public $message;
     public $senderId;
     public $receiverId;
+    public $messages;
 
 
     public function mount()
@@ -24,6 +25,9 @@ class ChatBox extends Component
         }
         $this->senderId = auth()->id();
         $this->receiverId = $this->selectedUser->id;
+
+        $this->messages = $this->getMessage();
+        // dd($message);
 
     }
 
@@ -37,6 +41,24 @@ class ChatBox extends Component
     {
         return view('livewire.chat-box', ['selectedUser' => $this->selectedUser]);
     }
+
+    public function getMessage()
+{
+
+//    dd
+     return Message::with('sender:id,name', 'receiver:id,name')
+         ->where( function ($query){
+            return $query->where('sender_id', $this->senderId)
+            ->where('receiver_id', $this->receiverId);
+         })
+        ->orWhere( function($query){
+            return $query->where('sender_id', $this->receiverId)
+            ->where('receiver_id', $this->senderId);
+        })->get();
+
+
+}
+
 
     public function sendMessage()
     {
