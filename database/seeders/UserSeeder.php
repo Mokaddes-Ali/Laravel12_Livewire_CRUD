@@ -41,8 +41,10 @@ class UserSeeder extends Seeder
         // Create and assign role to Super Admin user
         $superAdminUser = User::firstOrCreate(
             ['email' => 'superadmin@gmail.com'],
+            ['phone' => '1234567890'],
             [
                 'name' => 'Super Admin',
+                'phone' => '1234567890',
                 'password' => Hash::make('12345678'),
             ]
         );
@@ -51,6 +53,7 @@ class UserSeeder extends Seeder
         // Create and assign role to Admin user
         $adminUser = User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
+            ['phone' => '1234567891',],
             [
                 'name' => 'Admin',
                 'password' => Hash::make('12345678'),
@@ -61,6 +64,7 @@ class UserSeeder extends Seeder
         // Create and assign role to Staff user
         $staffUser = User::firstOrCreate(
             ['email' => 'staff@gmail.com'],
+            ['phone' => '1234567892'],
             [
                 'name' => 'Staff',
                 'password' => Hash::make('12345678'),

@@ -1,6 +1,8 @@
 <?php
 
 use Livewire\Volt\Volt;
+use App\Livewire\ChatBox;
+use App\Livewire\UserTable;
 use App\Livewire\RoleManagement;
 use App\Livewire\UserManagement;
 use App\Livewire\Course\CreateCourse;
@@ -26,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/roles', RoleManagement::class)->name('roles.index');
     Route::get('/users', UserManagement::class)->name('users.index');
+    Route::get('/users/chat', UserTable::class)->name('userschat.index');
+    Route::get('/chat', ChatBox::class)->name('chat');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

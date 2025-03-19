@@ -69,6 +69,20 @@ class UserManagement extends Component
 
     public function store()
     {
+        if(!$this->name){
+            session()->flash('error', 'The name fields is required !');
+            return;
+        }
+
+        if(!$this->email){
+            session()->flash('error', 'Give an Email please !');
+            return;
+        }
+        if(!$this->password){
+            session()->flash('error', 'The password fields is required !');
+            return;
+        }
+
         $this->validate();
 
         $user = User::create([

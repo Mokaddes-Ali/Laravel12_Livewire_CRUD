@@ -9,7 +9,7 @@
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         <!-- Logo -->
-        <a href="{{ route('dashboard') }}" class="mr-5 flex items-center space-x-2 p-4">
+        <a navigate href="{{ route('dashboard') }}" class="mr-5 flex items-center space-x-2 p-4">
             <x-app-logo />
             <span class="text-lg font-semibold text-zinc-900 dark:text-white">Dashboard</span>
         </a>
@@ -30,6 +30,7 @@
             <flux:navlist.item
                 icon="users"
                 :href="url('/users')"
+                wire:navigate
                 class="px-4 py-2 rounded-lg transition-all hover:bg-zinc-200 dark:hover:bg-zinc-700"
                 :class="request()->is('users') ? 'bg-zinc-200 text-white' : 'text-zinc-900 dark:text-white'"
             >
@@ -39,6 +40,7 @@
             <flux:navlist.item
                 icon="users"
                 :href="route('roles.index')"
+                wire:navigate
                 class="px-4 py-2 rounded-lg transition-all hover:bg-zinc-200 dark:hover:bg-zinc-700"
                 :class="request()->routeIs('roles.index') ? 'bg-zinc-200 text-white' : 'text-zinc-900 dark:text-white'"
             >
@@ -48,11 +50,21 @@
             <flux:navlist.item
             icon="users"
             :href="route('create.course')"
+            wire:navigate
             class="px-4 py-2 rounded-lg transition-all hover:bg-zinc-200 dark:hover:bg-zinc-700"
             :class="request()->routeIs('create.course') ? 'bg-zinc-200 text-white' : 'text-zinc-900 dark:text-white'"
         >
             {{ __('Courses') }}
         </flux:navlist.item>
+
+        <div class="w-64 h-screen bg-gray-800 text-white">
+            <ul>
+                <li class="p-4 hover:bg-gray-700">
+                    <a href="{{ route('users.index') }}">Chats</a>
+                </li>
+            </ul>
+        </div>
+        
         </flux:navlist.group>
 
         <flux:spacer />

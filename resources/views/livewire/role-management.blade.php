@@ -47,6 +47,9 @@
                             <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
                                 <i class="fa-solid fa-floppy-disk"></i> {{ $roleId ? 'Update' : 'Submit' }}
                             </button>
+                            <button type="button" wire:click="resetInputFields" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700">
+                                <i class="fa-solid fa-rotate-left"></i> Back
+                            </button>
                         </div>
                     </div>
                 </form>

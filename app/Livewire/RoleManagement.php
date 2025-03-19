@@ -72,6 +72,13 @@ class RoleManagement extends Component
         session()->flash('message', 'Role Created Successfully.');
     }
 
+    public function resetInputFields(){
+        $this->name = '';
+        $this->selectedPermissions = [];
+        $this->isEditMode = false;
+
+    }
+
     public function edit($id)
     {
         $role = Role::findOrFail($id);
@@ -113,15 +120,6 @@ class RoleManagement extends Component
         session()->flash('message', 'Role Updated Successfully.');
     }
 
-    // public function delete($id)
-    // {
-    //     Role::find($id)->delete();
-    //     $this->roles = Role::orderBy('id', 'DESC')->get();
-
-    //     session()->flash('message', 'Role Deleted Successfully.');
-    // }
-
-
     public function confirmDelete($id)
     {
         $role = Role::with('permissions')->findOrFail($id);
@@ -138,9 +136,9 @@ class RoleManagement extends Component
     }
 
 
-    private function resetInputFields()
-    {
-        $this->name = '';
-        $this->selectedPermissions = [];
-    }
+    // private function resetInputFields()
+    // {
+    //     $this->name = '';
+    //     $this->selectedPermissions = [];
+    // }
 }

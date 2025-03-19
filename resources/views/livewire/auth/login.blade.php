@@ -2,6 +2,7 @@
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -11,9 +12,11 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
+use App\Models\User;
+
 new #[Layout('components.layouts.auth')] class extends Component {
-    #[Validate('required|string|email')]
-    public string $email = '';
+    #[Validate('required|string')]
+    public string $loginname = '';
 
     #[Validate('required|string')]
     public string $password = '';
@@ -29,18 +32,23 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($this->throttleKey());
+        $user = User::where('email', $this->loginname)
+            ->orWhere('phone', $this->loginname)
+            ->orWhere('name', $this->loginname)
+            ->first();
 
+        if (!$user || !Hash::check($this->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'loginname' => __('auth.failed'),
             ]);
         }
+
+        Auth::login($user, $this->remember);
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(route('dashboard', absolute: false), navigate: true);
     }
 
     /**
@@ -48,7 +56,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
      */
     protected function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -57,7 +65,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
+            'loginname' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -69,7 +77,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->loginname) . '|' . request()->ip());
     }
 }; ?>
 
@@ -82,13 +90,11 @@ new #[Layout('components.layouts.auth')] class extends Component {
     <form wire:submit="login" class="flex flex-col gap-6">
         <!-- Email Address -->
         <flux:input
-            wire:model="email"
-            :label="__('Email address')"
-            type="email"
+            wire:model="loginname"
+            :label="__('Email/Phone/name')"
+            type="text"
             required
-            autofocus
-            autocomplete="email"
-            placeholder="email@example.com"
+            placeholder="email@example.com/01402967304/username"
         />
 
         <!-- Password -->
